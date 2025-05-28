@@ -1,0 +1,12 @@
+.container-header {
+  max-width: 1400px;
+  margin: 20px auto;
+  p {
+    text-align: center;
+  }
+}
+
+.logo-header {
+  width: 150px;
+  padding: 15px;
+}

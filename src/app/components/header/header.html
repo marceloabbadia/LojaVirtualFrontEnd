@@ -1,7 +1,85 @@
 <div class="container-header">
-  <p>
-    Homem | Mulher
-    <img src="/assets/images/logo.png" class="logo-header" alt="Logo" />
-    Crianca | Acessorios
-  </p>
+  <div class="header-center">
+    <ul class="nav justify-content-center align-items-center gap-3">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button">Homem</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Casacos</a></li>
+          <li><a class="dropdown-item" href="#">Camisas</a></li>
+          <li><a class="dropdown-item" href="#">Calças</a></li>
+          <li><a class="dropdown-item" href="#">Sweatshirts</a></li>
+          <li><a class="dropdown-item" href="#">Polos</a></li>
+          <li><a class="dropdown-item" href="#">Sapatos</a></li>
+          <li><a class="dropdown-item" [routerLink]="'/products'">Todos</a></li>
+        </ul>
+      </li>
+
+      <li class="separator">|</li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button">Mulher</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Vestidos</a></li>
+          <li><a class="dropdown-item" href="#">Blusões</a></li>
+          <li><a class="dropdown-item" href="#">Coletes</a></li>
+          <li><a class="dropdown-item" href="#">Jeans</a></li>
+          <li><a class="dropdown-item" href="#">Saias</a></li>
+          <li><a class="dropdown-item" href="#">Calções</a></li>
+          <li><a class="dropdown-item" href="#">Lingerie</a></li>
+          <li><a class="dropdown-item" href="#">Sapatos</a></li>
+          <li><a class="dropdown-item" href="#">Malas</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item logo-wrapper">
+        <img
+          src="/assets/images/logo.png"
+          class="logo-header"
+          alt="Logo"
+          [routerLink]="'/'"
+        />
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button">Criança</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#"> Menina | 6-14 Anos</a></li>
+          <li><a class="dropdown-item" href="#">Menino | 6-14 Anos</a></li>
+          <li>
+            <a class="dropdown-item" href="#">Bebé Menina | 3 Meses - 5 Anos</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Bebé Menino | 3 Meses - 5 Anos</a>
+          </li>
+          <li><a class="dropdown-item" href="#">Mini | 0-12 Meses</a></li>
+        </ul>
+      </li>
+
+      <li class="separator">|</li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button"
+          >Acessórios</a
+        >
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Malas</a></li>
+          <li><a class="dropdown-item" href="#">Pulseiras</a></li>
+          <li><a class="dropdown-item" href="#">Anéis</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="header-icons" *ngIf="auth; else notLogged">
+    <i class="fa-regular fa-clipboard"></i>
+    <i class="fa-regular fa-user"></i>
+    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+  </div>
+
+  <ng-template #notLogged>
+    <div class="header-icons">
+      <i class="fa-solid fa-user-plus"></i>
+      <i class="fa-solid fa-arrow-right-to-bracket"></i>
+    </div>
+  </ng-template>
 </div>

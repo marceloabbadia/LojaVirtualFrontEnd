@@ -1,6 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+html,
 body {
-  max-width: 1400px;
-  margin: auto;
   font-family: "Open Sans", sans-serif;
 }

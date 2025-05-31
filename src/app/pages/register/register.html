@@ -1,1 +1,181 @@
-<p>register works!</p>
+<main id="pag_register" class="container py-4">
+  <h1>Registo de utilizador</h1>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="row g-3 align-items-center mb-3">
+      <label for="name" class="col-form-label col-sm-2">Nome:</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+        />
+        <div *ngIf="hasError('name', 'required')" class="text-danger mt-1">
+          O nome é obrigatório.
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center mb-3">
+      <label for="email" class="col-form-label col-sm-2">E-mail:</label>
+      <div class="col-sm-8">
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+        />
+        <div *ngIf="hasError('email', 'required')" class="text-danger mt-1">
+          O e-mail é obrigatório.
+        </div>
+        <div *ngIf="hasError('email', 'email')" class="text-danger mt-1">
+          Formato de e-mail inválido.
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center mb-3">
+      <label for="address" class="col-form-label col-sm-2">Morada:</label>
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="address"
+          formControlName="address"
+          class="form-control"
+        />
+        <div *ngIf="hasError('address', 'required')" class="text-danger mt-1">
+          A morada é obrigatória.
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center mb-3">
+      <label class="col-form-label col-sm-2">Código Postal:</label>
+      <div class="col-sm-2">
+        <input
+          type="text"
+          id="cp4"
+          formControlName="cp4"
+          class="form-control"
+        />
+        <div *ngIf="hasError('cp4', 'required')" class="text-danger mt-1">
+          Obrigatório
+        </div>
+        <div *ngIf="hasError('cp4', 'pattern')" class="text-danger mt-1">
+          4 dígitos
+        </div>
+      </div>
+      -
+      <div class="col-sm-2">
+        <input
+          type="text"
+          id="cp3"
+          formControlName="cp3"
+          class="form-control"
+        />
+        <div *ngIf="hasError('cp3', 'required')" class="text-danger mt-1">
+          Obrigatório
+        </div>
+        <div *ngIf="hasError('cp3', 'pattern')" class="text-danger mt-1">
+          3 dígitos
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <input
+          type="text"
+          id="cpLocal"
+          formControlName="cpLocal"
+          class="form-control"
+        />
+        <div *ngIf="hasError('cpLocal', 'required')" class="text-danger mt-1">
+          Obrigatório
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center mb-3">
+      <label for="country" class="col-form-label col-sm-2">País:</label>
+      <div class="col-sm-4">
+        <select id="country" formControlName="country" class="form-select">
+          <option value="">-- Seleccione um país --</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Espanha">Espanha</option>
+        </select>
+        <div *ngIf="hasError('country', 'required')" class="text-danger mt-1">
+          Obrigatório
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center mb-3">
+      <label for="password" class="col-form-label col-sm-2">Senha:</label>
+      <div class="col-sm-4">
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+        />
+        <div *ngIf="hasError('password', 'required')" class="text-danger mt-1">
+          Obrigatório
+        </div>
+        <div *ngIf="hasError('password', 'pattern')" class="text-danger mt-1">
+          A senha deve ter pelo menos 8 caracteres, incluindo maiúsculas,
+          minúsculas, número e símbolo.
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center mb-3">
+      <label for="passwordConfirm" class="col-form-label col-sm-2"
+        >Confirme a senha:</label
+      >
+      <div class="col-sm-4">
+        <input
+          type="password"
+          id="passwordConfirm"
+          formControlName="passwordConfirm"
+          class="form-control"
+        />
+        <div
+          *ngIf="hasError('passwordConfirm', 'required')"
+          class="text-danger mt-1"
+        >
+          Obrigatório
+        </div>
+        <div
+          *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('passwordConfirm')?.touched"
+          class="text-danger mt-1"
+        >
+          As senhas não coincidem.
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-sm-2 text-sm-end">
+        <input
+          type="checkbox"
+          formControlName="confirm"
+          class="form-check-input"
+        />
+      </div>
+      <div class="col-sm-4">
+        <label class="form-check-label" for="confirm"
+          >Li e aceito os termos e condições</label
+        >
+        <div *ngIf="hasError('confirm', 'required')" class="text-danger mt-1">
+          Obrigatório
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center mb-3 justify-content-end">
+      <input
+        type="submit"
+        value="Efectuar registo"
+        class="btn btn-primary col-sm-3"
+      />
+    </div>
+  </form>
+</main>

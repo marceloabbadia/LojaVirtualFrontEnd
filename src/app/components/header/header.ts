@@ -11,5 +11,5 @@ import { Products } from '../../pages/products/products';
   styleUrl: './header.css',
 })
 export class Header {
-  auth = true;
+  auth = false;
 }

@@ -1,0 +1,10 @@
+#pag_register {
+  padding: 30px;
+  margin-top: 20px;
+}
+
+#pag_register h1 {
+  font-weight: bold;
+  font-size: 2em;
+  margin-bottom: 40px;
+}

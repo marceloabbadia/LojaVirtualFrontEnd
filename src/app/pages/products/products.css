@@ -12,3 +12,30 @@
   border: 2px solid red;
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
 }
+
+.card-text-products {
+  font-size: 2em;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.card-title-products-brand {
+  font-size: 1.5em;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.card-title-products {
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.card-price-products {
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.filter-type {
+  background-color: orangered;
+}

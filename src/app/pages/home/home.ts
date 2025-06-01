@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Products } from "../products/products";
+import { Highlight } from '../../components/highlight/highlight';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, Products],
+  imports: [CommonModule, Highlight],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })

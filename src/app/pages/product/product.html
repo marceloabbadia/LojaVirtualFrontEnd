@@ -1,1 +1,29 @@
-<p>product works!</p>
+<div class="container my-4 mt-5 align-items-center" *ngIf="product">
+  <div class="row mt-4 justify-content-center alig">
+    <div class="col-md-6">
+      <h2 class="card-brand-product">{{ product.brand }}</h2>
+      <h2 class="card-name-product">{{ product.name }}</h2>
+    </div>
+    <div class="row mt-4 g-3 justify-content-center">
+      <div class="col-md-6 d-flex gap-5">
+        <img
+          [src]="imageUrl(product.mainPhoto)"
+          class="img-fluid"
+          [alt]="product.name"
+        />
+        <img
+          [src]="imageUrl(product.secondaryPhoto)"
+          class="img-fluid"
+          [alt]="product.name"
+        />
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <p class="card-type-product">
+        {{ product.productType}} {{product.color}}
+      </p>
+      <p class="card-price-product">{{ product.price }}€</p>
+      <p class="card-description-product">{{ product.description }}</p>
+    </div>
+  </div>
+</div>

@@ -1,33 +1,92 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 interface Product {
   _id: string;
   name: string;
+  productType: string;
+  color: string;
+  brand: string;
   price: number;
+  description: string;
   mainPhoto: string;
+  secondaryPhoto: string;
 }
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
 export class Products implements OnInit {
   products: Product[] = [];
+  visibleProducts: Product[] = [];
+  itemsPerPage = 3;
+  currentPage = 1;
+
+  selectedType: string | null = null;
+  selectedColor: string | null = null;
+
+  sortedTypes: string[] = [];
+  sortedColors: string[] = [];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.http
       .get<Product[]>('http://localhost:3000/product')
-      .subscribe((data) => (this.products = data.slice(0, 8)));
+      .subscribe((data) => {
+        this.products = data;
+        this.loadMore();
+
+        this.sortedTypes = [...new Set(data.map((p) => p.productType))]
+          .filter(Boolean)
+          .sort((a, b) => a.localeCompare(b));
+        this.sortedTypes.push('Todos');
+
+        this.sortedColors = [...new Set(data.map((p) => p.color))]
+          .filter(Boolean)
+          .sort((a, b) => a.localeCompare(b));
+        this.sortedColors.push('Todos');
+      });
   }
 
-  imageUrl(p: Product): string {
-    return `http://localhost:3000/images/${p.mainPhoto}`;
+  get filteredTotal(): number {
+    return this.products.filter(
+      (p) =>
+        (!this.selectedType ||
+          this.selectedType === 'Todos' ||
+          p.productType === this.selectedType) &&
+        (!this.selectedColor ||
+          this.selectedColor === 'Todos' ||
+          p.color === this.selectedColor)
+    ).length;
+  }
+
+  get filteredProducts(): Product[] {
+    return this.products
+      .filter(
+        (p) =>
+          (!this.selectedType ||
+            this.selectedType === 'Todos' ||
+            p.productType === this.selectedType) &&
+          (!this.selectedColor ||
+            this.selectedColor === 'Todos' ||
+            p.color === this.selectedColor)
+      )
+      .slice(0, this.currentPage * this.itemsPerPage);
+  }
+
+  loadMore() {
+    this.currentPage++;
+  }
+
+  imageUrl(photo: string): string {
+    return `http://localhost:3000/images/${photo}`;
   }
 }

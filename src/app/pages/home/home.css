@@ -1,0 +1,49 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.carousel-wrapper {
+  position: relative;
+  width: 1400px;
+  height: 600px;
+  overflow: hidden;
+}
+
+.carousel-image {
+  position: absolute;
+  width: 1400px;
+  top: 0;
+  left: 0;
+  opacity: 1;
+}
+
+.carousel-image.slide-in {
+  animation: slideFromRight 1s ease-in-out;
+}
+
+@keyframes slideFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.promotion {
+  position: absolute;
+  font-weight: bolder;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  color: white;
+  font-size: 4rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}

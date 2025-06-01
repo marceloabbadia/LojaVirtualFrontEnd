@@ -1,1 +1,16 @@
-<p>home works!</p>
+<div class="carousel">
+  <h1 class="promotion">SALDOS</h1>
+  <div class="carousel-wrapper">
+    <ng-container *ngFor="let img of images; let i = index">
+      <img
+        *ngIf="i === currentIndex"
+        [src]="img"
+        alt="Slide {{ i + 1 }}"
+        class="carousel-image"
+        [class.slide-in]="animate"
+      />
+    </ng-container>
+  </div>
+</div>
+<!-- aqui tem que mostrar apenas os produtos destaques -->
+<app-products></app-products>

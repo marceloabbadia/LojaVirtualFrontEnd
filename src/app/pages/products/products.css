@@ -1,0 +1,14 @@
+.card-img-top {
+  height: auto;
+  object-fit: cover;
+}
+
+.card {
+  border: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  border: 2px solid red;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}

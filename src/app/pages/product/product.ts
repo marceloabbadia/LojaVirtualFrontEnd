@@ -13,6 +13,7 @@ interface Product {
   description: string;
   mainPhoto: string;
   secondaryPhoto: string;
+  wishlist?: boolean;
 }
 
 @Component({
@@ -23,6 +24,8 @@ interface Product {
   styleUrl: './product.css',
 })
 export class ProductPage implements OnInit {
+  isAuthenticated = true;
+  inWishlist = false;
   product!: Product;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
@@ -36,5 +39,16 @@ export class ProductPage implements OnInit {
 
   imageUrl(photo: string): string {
     return `http://localhost:3000/images/${photo}`;
+  }
+
+  toggleWishlist() {
+    const newWishlistState = !this.product.wishlist;
+
+    this.http
+      .patch(`http://localhost:3000/product/wishlist/${this.product._id}`, {})
+      .subscribe(() => {
+        this.product.wishlist = newWishlistState;
+        console.log('Wishlist atualizada no backend:', this.product.wishlist);
+      });
   }
 }

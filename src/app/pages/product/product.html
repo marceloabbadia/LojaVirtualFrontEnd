@@ -4,6 +4,7 @@
       <h2 class="card-brand-product">{{ product.brand }}</h2>
       <h2 class="card-name-product">{{ product.name }}</h2>
     </div>
+
     <div class="row mt-4 g-3 justify-content-center">
       <div class="col-md-6 d-flex gap-5">
         <img
@@ -16,6 +17,14 @@
           class="img-fluid"
           [alt]="product.name"
         />
+        <i
+          [ngClass]="product.wishlist ? 'fas fa-star' : 'far fa-star'"
+          [style.color]="product.wishlist ? 'red' : 'black'"
+          style="cursor: pointer; font-size: 30px"
+          *ngIf="isAuthenticated"
+          (click)="toggleWishlist()"
+          title="Adicionar/Remover da wishlist"
+        ></i>
       </div>
     </div>
     <div class="col-md-6 mt-4">

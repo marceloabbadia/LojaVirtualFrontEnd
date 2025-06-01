@@ -14,6 +14,7 @@ interface Product {
   description: string;
   mainPhoto: string;
   secondaryPhoto: string;
+  wishlist?: boolean;
 }
 
 @Component({
@@ -24,6 +25,7 @@ interface Product {
   styleUrl: './products.css',
 })
 export class Products implements OnInit {
+  isAuthenticated = true;
   products: Product[] = [];
   visibleProducts: Product[] = [];
   itemsPerPage = 3;
@@ -88,5 +90,22 @@ export class Products implements OnInit {
 
   imageUrl(photo: string): string {
     return `http://localhost:3000/images/${photo}`;
+  }
+
+  toggleWishlist(product: Product, event: Event) {
+    event.stopPropagation();
+    const newWishlistState = !product.wishlist;
+
+    this.http
+      .patch(`http://localhost:3000/product/wishlist/${product._id}`, {})
+      .subscribe({
+        next: () => {
+          product.wishlist = newWishlistState;
+        },
+        error: (err) => {
+          console.error('Erro ao atualizar wishlist:', err);
+          alert('Falha ao atualizar a lista de desejos.');
+        },
+      });
   }
 }

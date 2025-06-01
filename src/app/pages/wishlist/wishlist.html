@@ -1,1 +1,53 @@
-<p>wishlist works!</p>
+<div class="container my-5">
+  <h1 class="mb-4 text-center">Wishlist</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div *ngIf="products.length > 0; else empty">
+        <div class="d-flex flex-column gap-4">
+          <div
+            class="card d-flex flex-row align-items-center p-3 border-0 shadow-sm"
+            *ngFor="let p of products"
+          >
+            <div class="me-4">
+              <img
+                [src]="imageUrl(p)"
+                alt="{{ p.name }}"
+                class="rounded img-fluid"
+                style="max-width: 120px"
+              />
+            </div>
+
+            <div class="flex-grow-1 me-4 text-center">
+              <h5 class="card-title-products-brand mb-1">{{ p.brand }}</h5>
+              <p class="card-title-products mb-0">
+                {{ p.productType }} — {{ p.color }}
+              </p>
+              <p class="card-price-products fw-bold mb-0 mt-1">
+                {{ p.price }}€
+              </p>
+            </div>
+
+            <div class="ms-auto d-flex align-items-center">
+              <button
+                class="btn btn-danger btn-lg"
+                (click)="removeFromWishlist(p, $event)"
+                title="Remover da wishlist"
+              >
+                Remover
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mensagem quando não há nenhum produto -->
+<ng-template #empty>
+  <div class="text-center py-5">
+    <p class="lead">Sua lista de desejos está vazia.</p>
+    <a href="/products" class="btn btn-primary">Ir às compras</a>
+  </div>
+</ng-template>

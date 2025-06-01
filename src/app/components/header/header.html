@@ -71,7 +71,7 @@
   </div>
 
   <div class="header-icons" *ngIf="auth; else notLogged">
-    <i class="fa-regular fa-clipboard"></i>
+    <i class="fa-regular fa-clipboard" [routerLink]="'/wishlist'"></i>
     <i class="fa-regular fa-user"></i>
     <i class="fa-solid fa-arrow-right-from-bracket"></i>
   </div>

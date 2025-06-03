@@ -130,6 +130,9 @@
       <label for="passwordConfirm" class="col-form-label col-sm-2"
         >Confirme a senha:</label
       >
+      <div *ngIf="hasError('passwordConfirm', 'mismatch')" class="text-danger">
+        As senhas não coincidem.
+      </div>
       <div class="col-sm-4">
         <input
           type="password"

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Products } from '../../pages/products/products';
-import { Login } from "../../pages/login/login";
+import { Login } from '../../pages/login/login';
 
 @Component({
   selector: 'app-header',
@@ -12,5 +12,5 @@ import { Login } from "../../pages/login/login";
   styleUrl: './header.css',
 })
 export class Header {
-  auth = true;
+  auth = false;
 }

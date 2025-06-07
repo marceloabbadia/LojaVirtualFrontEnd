@@ -1,12 +1,12 @@
 <div class="container my-4 mt-5 align-items-center" *ngIf="product">
-  <div class="row mt-4 justify-content-center alig">
-    <div class="col-md-6">
+  <div class="row mt-4 justify-content-center">
+    <div class="col-md-6 text-center text-md-start">
       <h2 class="card-brand-product">{{ product.brand }}</h2>
       <h2 class="card-name-product">{{ product.name }}</h2>
     </div>
 
     <div class="row mt-4 g-3 justify-content-center">
-      <div class="col-md-6 d-flex gap-5">
+      <div class="col-md-6 d-flex gap-5 align-items-center">
         <img
           [src]="imageUrl(product.mainPhoto)"
           class="img-fluid"
@@ -18,21 +18,25 @@
           [alt]="product.name"
         />
         <i
+          class="position-relative"
           [ngClass]="product.wishlist ? 'fas fa-star' : 'far fa-star'"
-          [style.color]="product.wishlist ? 'red' : 'black'"
-          style="cursor: pointer; font-size: 30px"
-          *ngIf="isAuthenticated"
-          (click)="toggleWishlist()"
+          style="font-size: 30px; cursor: pointer"
+          (click)="isAuthenticated ? toggleWishlist(product, $event) : openLoginModal()"
           title="Adicionar/Remover da wishlist"
         ></i>
       </div>
     </div>
+
     <div class="col-md-6 mt-4">
       <p class="card-type-product">
-        {{ product.productType}} {{product.color}}
+        {{ product.productType }} — {{ product.color }}
       </p>
       <p class="card-price-product">{{ product.price }}€</p>
       <p class="card-description-product">{{ product.description }}</p>
+
+      <p><strong>Wishlist:</strong> {{ product.wishlist }}</p>
     </div>
   </div>
 </div>
+
+<app-login #loginModal></app-login>

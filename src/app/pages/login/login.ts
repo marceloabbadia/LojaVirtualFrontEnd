@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
-export class Login {
+export class LoginComponent {
   showModal = false;
   loginData = { email: '', password: '' };
   errorMessage = '';
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private authService: AuthService) {}
 
   openModal() {
     this.showModal = true;
@@ -32,24 +30,22 @@ export class Login {
   }
 
   onSubmit() {
-    this.errorMessage = '';
-
     if (!this.loginData.email || !this.loginData.password) {
-      this.errorMessage = 'Os dois campos são de preenchimento obrigatório!';
+      this.errorMessage = 'Preencha todos os campos.';
       return;
     }
 
     if (!this.isValidEmail(this.loginData.email)) {
-      this.errorMessage = 'O e-mail tem um formato incorrecto!';
+      this.errorMessage = 'E-mail inválido!';
       return;
     }
 
-    this.loginService
+    this.authService
       .login(this.loginData.email, this.loginData.password)
       .then((result) => {
         if (result === true) {
           this.closeModal();
-          this.router.navigate(['/']);
+          location.reload();
         } else {
           this.errorMessage = result as string;
         }

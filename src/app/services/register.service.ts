@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 interface RegisterData {
-  nome: string;
+  name: string;
   email: string;
-  senha: string;
-  morada: string;
-  codigoPostal: string;
-  pais: string;
+  password: string;
+  address: string;
+  cp3: string;
+  cp4: string;
+  cplocal: string;
+  country: string;
 }
 
 @Injectable({ providedIn: 'root' })

@@ -16,6 +16,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.css'],
 })
 export class Register {
+  
+  errorMessage: string | null = null;
+
   registerForm: FormGroup;
 
   constructor(
@@ -29,7 +32,7 @@ export class Register {
       address: ['', Validators.required],
       cp4: ['', [Validators.required, Validators.pattern('[0-9]{4}')]],
       cp3: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      cpLocal: ['', Validators.required],
+      cplocal: ['', Validators.required],
       country: ['', Validators.required],
       password: [
         '',
@@ -50,22 +53,26 @@ export class Register {
       const form = this.registerForm.value;
 
       const userData = {
-        nome: form.name,
+        name: form.name,
         email: form.email,
-        senha: form.password,
-        morada: form.address,
-        codigoPostal: `${form.cp4}-${form.cp3}`,
-        pais: form.country,
+        password: form.password,
+        address: form.address,
+        cp4: form.cp4,
+        cp3: form.cp3,
+        cplocal: form.cplocal,
+        country: form.country,
       };
 
       this.registerService.register(userData).subscribe({
         next: () => {
           alert('Cadastro realizado com sucesso!');
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
         },
+
         error: (err) => {
           console.error('Erro ao cadastrar:', err);
-          alert('Ocorreu um erro ao realizar o cadastro.');
+          this.errorMessage =
+            err?.error?.message || 'Erro inesperado ao cadastrar.';
         },
       });
     } else {

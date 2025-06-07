@@ -49,33 +49,33 @@
         <div class="col-6 col-sm-4 col-md-4" *ngFor="let p of filteredProducts">
           <a
             [routerLink]="['/product', p._id]"
-            class="text-decoration-none text-dark"
+            class="text-decoration-none text-dark position-relative d-block"
           >
-            <div class="card h-100 border-0">
+            <div class="card h-100 border-0 shadow-sm position-relative">
               <img
                 [src]="imageUrl(p.mainPhoto)"
                 class="card-img-top"
                 [alt]="p.name"
               />
+
+              <i
+                [ngClass]="p.wishlist ? 'fas fa-star' : 'far fa-star'"
+                style="
+                  position: absolute;
+                  top: 10px;
+                  right: 10px;
+                  font-size: 20px;
+                  cursor: pointer;
+                  z-index: 2;
+                "
+                (click)="toggleWishlist(p, $event)"
+                title="Adicionar/Remover da wishlist"
+              ></i>
+
               <div class="card-body">
                 <h5 class="card-title-products-brand">{{ p.brand }}</h5>
                 <p class="card-title-products">{{ p.name }}</p>
                 <p class="card-price-products">{{ p.price }}€</p>
-
-                <i
-                  [ngClass]="p.wishlist ? 'fas fa-star' : 'far fa-star'"
-                  [style.color]="p.wishlist ? 'red' : 'black'"
-                  style="
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    font-size: 20px;
-                    cursor: pointer;
-                  "
-                  *ngIf="isAuthenticated"
-                  (click)="toggleWishlist(p, $event)"
-                  title="Adicionar/Remover da wishlist"
-                ></i>
               </div>
             </div>
           </a>
@@ -92,4 +92,6 @@
       </div>
     </div>
   </div>
+
+  <app-login #loginModal></app-login>
 </div>

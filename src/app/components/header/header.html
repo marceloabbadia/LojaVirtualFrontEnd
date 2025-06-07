@@ -70,18 +70,23 @@
     </ul>
   </div>
 
-  <div class="header-icons" *ngIf="auth; else notLogged">
+  <div class="header-icons" *ngIf="authService.isLoggedIn">
     <i class="fa-regular fa-clipboard" [routerLink]="'/wishlist'"></i>
-    <i class="fa-regular fa-user" (click)="loginModal.openModal()"></i>
-    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    <i class="fa-solid fa-user" [routerLink]="'/profile'"></i>
+    <i
+      class="fa-solid fa-arrow-right-from-bracket"
+      (click)="authService.logout()"
+      title="Sair"
+    ></i>
+  </div>
+
+  <div class="header-icons" *ngIf="!authService.isLoggedIn">
+    <i class="fa-solid fa-user-plus" [routerLink]="'/register'"></i>
+    <i
+      class="fa-solid fa-arrow-right-to-bracket"
+      (click)="loginModal.openModal()"
+    ></i>
   </div>
 
   <app-login #loginModal></app-login>
-
-  <ng-template #notLogged>
-    <div class="header-icons">
-      <i class="fa-solid fa-user-plus" [routerLink]="'/register'"></i>
-      <i class="fa-solid fa-arrow-right-to-bracket"></i>
-    </div>
-  </ng-template>
 </div>

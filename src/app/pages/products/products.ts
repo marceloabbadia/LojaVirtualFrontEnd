@@ -1,8 +1,12 @@
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { WishlistService } from '../../services/wishlist.service';
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { LoginComponent } from '../login/login';
 
 interface Product {
   _id: string;
@@ -20,92 +24,136 @@ interface Product {
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule, LoginComponent],
   templateUrl: './products.html',
-  styleUrl: './products.css',
+  styleUrls: ['./products.css'],
 })
 export class Products implements OnInit {
-  isAuthenticated = true;
   products: Product[] = [];
-  visibleProducts: Product[] = [];
-  itemsPerPage = 3;
+  itemsPerPage = 6;
   currentPage = 1;
 
-  selectedType: string | null = null;
-  selectedColor: string | null = null;
+  selectedType: string | null = 'Todos';
+  selectedColor: string | null = 'Todos';
 
   sortedTypes: string[] = [];
   sortedColors: string[] = [];
 
-  constructor(private http: HttpClient) {}
+  @ViewChild('loginModal') loginModal!: LoginComponent;
 
-  ngOnInit() {
-    this.http
-      .get<Product[]>('http://localhost:3000/product')
-      .subscribe((data) => {
-        this.products = data;
-        this.loadMore();
+  get isAuthenticated(): boolean {
+    return this.authService.isLoggedIn;
+  }
 
-        this.sortedTypes = [...new Set(data.map((p) => p.productType))]
-          .filter(Boolean)
-          .sort((a, b) => a.localeCompare(b));
-        this.sortedTypes.push('Todos');
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService,
+    private wishlistService: WishlistService
+  ) {}
 
-        this.sortedColors = [...new Set(data.map((p) => p.color))]
-          .filter(Boolean)
-          .sort((a, b) => a.localeCompare(b));
-        this.sortedColors.push('Todos');
-      });
+  ngOnInit(): void {
+    this.loadProductsAndWishlist();
+  }
+
+  loadProductsAndWishlist(): void {
+    if (this.isAuthenticated) {
+      const user = JSON.parse(
+        sessionStorage.getItem('utilizadorAtivo') || '{}'
+      );
+
+      this.http
+        .get<Product[]>(
+          `http://localhost:3000/auth/wishlist/me?userId=${user._id}`
+        )
+        .subscribe({
+          next: (products) => {
+            this.products = products;
+            this.updateFilters();
+          },
+          error: () => {
+            this.products = [];
+            this.updateFilters();
+          },
+        });
+    } else {
+      this.http
+        .get<Product[]>('http://localhost:3000/product')
+        .subscribe((data) => {
+          this.products = data.map((p) => ({ ...p, wishlist: false }));
+          this.updateFilters();
+        });
+    }
+  }
+
+  updateFilters(): void {
+    this.sortedTypes = [
+      'Todos',
+      ...Array.from(new Set(this.products.map((p) => p.productType))),
+    ];
+    this.sortedColors = [
+      'Todos',
+      ...Array.from(new Set(this.products.map((p) => p.color))),
+    ];
   }
 
   get filteredTotal(): number {
-    return this.products.filter(
-      (p) =>
-        (!this.selectedType ||
-          this.selectedType === 'Todos' ||
-          p.productType === this.selectedType) &&
-        (!this.selectedColor ||
-          this.selectedColor === 'Todos' ||
-          p.color === this.selectedColor)
-    ).length;
+    return this.products.filter((p) => this.matchesFilters(p)).length;
   }
 
   get filteredProducts(): Product[] {
     return this.products
-      .filter(
-        (p) =>
-          (!this.selectedType ||
-            this.selectedType === 'Todos' ||
-            p.productType === this.selectedType) &&
-          (!this.selectedColor ||
-            this.selectedColor === 'Todos' ||
-            p.color === this.selectedColor)
-      )
+      .filter((p) => this.matchesFilters(p))
       .slice(0, this.currentPage * this.itemsPerPage);
   }
 
-  loadMore() {
+  private matchesFilters(product: Product): boolean {
+    const typeMatch =
+      this.selectedType === 'Todos' ||
+      !this.selectedType ||
+      product.productType === this.selectedType;
+    const colorMatch =
+      this.selectedColor === 'Todos' ||
+      !this.selectedColor ||
+      product.color === this.selectedColor;
+    return typeMatch && colorMatch;
+  }
+
+  loadMore(): void {
     this.currentPage++;
   }
 
-  imageUrl(photo: string): string {
-    return `http://localhost:3000/images/${photo}`;
-  }
-
-  toggleWishlist(product: Product, event: Event) {
+  toggleWishlist(product: Product, event: Event): void {
+    event.preventDefault();
     event.stopPropagation();
+
+    if (!this.isAuthenticated) {
+      this.openLoginModal();
+      return;
+    }
+
     const newWishlistState = !product.wishlist;
 
-    this.http
-      .patch(`http://localhost:3000/product/wishlist/${product._id}`, {})
-      .subscribe({
-        next: () => {
-          product.wishlist = newWishlistState;
-        },
-        error: (err) => {
-          console.error('Erro ao atualizar wishlist:', err);
-          alert('Falha ao atualizar a lista de desejos.');
-        },
-      });
+    this.wishlistService.toggleWishlist(product._id).subscribe({
+      next: () => {
+        product.wishlist = newWishlistState;
+      },
+      error: (err) => {
+        alert('Falha ao atualizar wishlist.');
+        console.error(err);
+      },
+    });
+  }
+
+  openLoginModal(): void {
+    if (this.loginModal && typeof this.loginModal.openModal === 'function') {
+      this.loginModal.openModal();
+    } else {
+      alert('Você precisa estar logado para usar a wishlist.');
+    }
+  }
+
+  imageUrl(path: string): string {
+    return `http://localhost:3000/images/${path}`;
   }
 }

@@ -5,6 +5,7 @@ import { NotFound } from './pages/not-found/not-found';
 import { Register } from './pages/register/register';
 import { ProductPage } from './pages/product/product';
 import { LoginComponent } from './pages/login/login';
+import { WishlistComponent } from './pages/wishlist/wishlist';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,12 @@ export const routes: Routes = [
     component: Register,
   },
   { path: 'highlight', component: Highlight },
-  { path: 'product/:id', component: ProductPage },
+  { path: 'wishlist', component: WishlistComponent },
+  {
+    path: 'product/:id',
+    component: ProductPage,
+    runGuardsAndResolvers: 'always',
+  },
   {
     path: 'login',
     component: LoginComponent,

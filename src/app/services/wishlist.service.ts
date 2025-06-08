@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
+import { Product } from '../product.interface/product.interface';
 
 @Injectable({ providedIn: 'root' })
 export class WishlistService {
@@ -24,5 +25,11 @@ export class WishlistService {
     return this.http.patch(`${this.apiUrl}/auth/wishlist/${productId}`, {
       userId: user._id,
     });
+  }
+
+  getWishlist(userId: string): Observable<Product[]> {
+    return this.http.get<Product[]>(
+      `${this.apiUrl}/auth/wishlist/me?userId=${userId}`
+    );
   }
 }

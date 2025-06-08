@@ -1,0 +1,53 @@
+<div class="container my-5">
+  <h1 class="mb-4 text-center">WishList</h1>
+
+  <div *ngIf="!isAuthenticated" class="alert alert-info text-center">
+    <p>
+      Você precisa
+      <a [routerLink]="'/login'" class="alert-link">fazer login</a> para ver sua
+      wishlist.
+    </p>
+  </div>
+
+  <div *ngIf="isAuthenticated && products.length > 0">
+    <div
+      class="row align-items-center mb-4 border-bottom pb-3"
+      *ngFor="let p of products"
+    >
+      <div class="col-md-3 text-center">
+        <img
+          [src]="imageUrl(p.mainPhoto)"
+          [alt]="p.name"
+          class="img-fluid rounded"
+          style="max-width: 150px"
+        />
+      </div>
+
+      <div class="col-md-6 text-center">
+        <h5 class="mb-1">{{ p.name }}</h5>
+        <p class="text-muted mb-1">
+          Tipo: {{ p.productType }} — Cor: {{ p.color }}
+        </p>
+        <p class="text-muted mb-0">Marca: {{ p.brand }}</p>
+        <p class="fw-bold mb-2">{{ p.price }}€</p>
+      </div>
+
+      <div class="col-md-3 text-end">
+        <button
+          class="btn btn-danger btn-lg"
+          (click)="removeFromWishlist(p, $event)"
+        >
+          Remover
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="isAuthenticated && products.length === 0"
+    class="text-center mt-5"
+  >
+    <p class="lead">Sua wishlist está vazia.</p>
+    <a href="/products" class="btn btn-primary">Ir às compras</a>
+  </div>
+</div>

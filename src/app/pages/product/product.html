@@ -19,7 +19,7 @@
         />
         <i
           class="position-relative"
-          [ngClass]="product.wishlist ? 'fas fa-star' : 'far fa-star'"
+          [ngClass]="product.wishlist ?  'fas fa-star' : 'far fa-star'"
           style="font-size: 30px; cursor: pointer"
           (click)="isAuthenticated ? toggleWishlist(product, $event) : openLoginModal()"
           title="Adicionar/Remover da wishlist"

@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from '../login/login';
+import { ChangeDetectorRef } from '@angular/core';
 
 interface Product {
   _id: string;
@@ -49,7 +50,8 @@ export class Products implements OnInit {
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -137,6 +139,7 @@ export class Products implements OnInit {
     this.wishlistService.toggleWishlist(product._id).subscribe({
       next: () => {
         product.wishlist = newWishlistState;
+        this.cd.detectChanges();
       },
       error: (err) => {
         alert('Falha ao atualizar wishlist.');

@@ -44,15 +44,14 @@ export class ProductPage implements OnInit {
       console.error('ID do produto não fornecido');
       return;
     }
-
     this.loadProduct(id);
   }
 
   loadProduct(id: string) {
     this.http.get<Product>(`http://localhost:3000/product/${id}`).subscribe({
       next: (data) => {
-        this.product = { ...data, wishlist: false };
-        if (this.authService.isLoggedIn) {
+        this.product = { ...data };
+        if (this.isAuthenticated) {
           this.checkIfInWishlist();
         }
       },
@@ -74,33 +73,26 @@ export class ProductPage implements OnInit {
 
     if (user && user._id) {
       this.http
-        .get<{ wishlist: string[] }>(
+        .get<Product[]>(
           `http://localhost:3000/auth/wishlist/me?userId=${user._id}`
         )
         .subscribe({
-          next: (userData) => {
-            this.product.wishlist = userData.wishlist.includes(
-              this.product._id
+          next: (wishlistProducts) => {
+            this.product.wishlist = wishlistProducts.some(
+              (p) => p._id === this.product._id
             );
-            this.cd.detectChanges();
           },
-          error: (err) => {
-            console.warn('Erro ao verificar wishlist:', err);
+          error: () => {
             this.product.wishlist = false;
-            this.cd.detectChanges();
           },
         });
     } else {
       this.product.wishlist = false;
-      this.cd.detectChanges();
     }
   }
 
-  get isAuthenticated(): boolean {
-    return this.authService.isLoggedIn;
-  }
-
   toggleWishlist(product: Product, event: Event): void {
+    event.preventDefault();
     event.stopPropagation();
 
     if (!this.isAuthenticated) {
@@ -113,7 +105,6 @@ export class ProductPage implements OnInit {
     this.wishlistService.toggleWishlist(product._id).subscribe({
       next: () => {
         product.wishlist = newWishlistState;
-        this.cd.detectChanges();
       },
       error: (err) => {
         alert('Falha ao atualizar wishlist.');
@@ -122,7 +113,11 @@ export class ProductPage implements OnInit {
     });
   }
 
-  openLoginModal() {
+  get isAuthenticated(): boolean {
+    return this.authService.isLoggedIn;
+  }
+
+  openLoginModal(): void {
     if (this.loginModal && typeof this.loginModal.openModal === 'function') {
       this.loginModal.openModal();
     } else {
@@ -130,7 +125,7 @@ export class ProductPage implements OnInit {
     }
   }
 
-  imageUrl(photo: string): string {
-    return `http://localhost:3000/images/${photo}`;
+  imageUrl(path: string): string {
+    return `http://localhost:3000/images/${path}`;
   }
 }

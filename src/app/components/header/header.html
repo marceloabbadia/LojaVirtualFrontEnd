@@ -70,7 +70,13 @@
     </ul>
   </div>
 
-  <div class="header-icons" *ngIf="authService.isLoggedIn">
+  <div class="header-icons" *ngIf="user">
+    <span class="me-2"><h6>Bem-vindo(a), {{ user.name }}</h6></span>
+    <i
+      class="fa-solid fa-gear"
+      *ngIf="user.function === 'admin'"
+      [routerLink]="'/admin'"
+    ></i>
     <i class="fa-regular fa-clipboard" [routerLink]="'/wishlist'"></i>
     <i class="fa-solid fa-user" [routerLink]="'/profile'"></i>
     <i

@@ -1,0 +1,23 @@
+.label-fixed {
+  width: 100px;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 5px 12px;
+}
+
+.btn {
+  font-weight: bold;
+}
+
+.btn-success {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #0b5ed7;
+}

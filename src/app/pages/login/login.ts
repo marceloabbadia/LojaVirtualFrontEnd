@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent {
   loginData = { email: '', password: '' };
   errorMessage = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   openModal() {
     this.showModal = true;
@@ -45,7 +46,7 @@ export class LoginComponent {
       .then((result) => {
         if (result === true) {
           this.closeModal();
-          location.reload();
+          this.router.navigateByUrl('/');
         } else {
           this.errorMessage = result as string;
         }

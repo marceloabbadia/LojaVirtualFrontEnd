@@ -4,8 +4,8 @@
   <div *ngIf="!isAuthenticated" class="alert alert-info text-center">
     <p>
       Você precisa
-      <a [routerLink]="'/login'" class="alert-link">fazer login</a> para ver sua
-      wishlist.
+      <a [routerLink]="'openLoginModal()'" class="alert-link">fazer login</a>
+      para ver sua wishlist.
     </p>
   </div>
 

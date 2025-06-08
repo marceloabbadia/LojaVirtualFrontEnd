@@ -6,19 +6,40 @@ import { Register } from './pages/register/register';
 import { ProductPage } from './pages/product/product';
 import { LoginComponent } from './pages/login/login';
 import { WishlistComponent } from './pages/wishlist/wishlist';
+import { Admin } from './pages/admin/admin';
+import { Profile } from './pages/profile/profile';
+import { EditProfile } from './pages/edit-profile/edit-profile';
 
 export const routes: Routes = [
   {
     path: '',
     component: Home,
   },
-  { path: 'products', component: Products, runGuardsAndResolvers: 'always' },
+  {
+    path: 'products',
+    component: Products,
+    runGuardsAndResolvers: 'always',
+  },
+  {
+    path: 'profile',
+    component: Profile,
+  },
+  {
+    path: 'edit-profile',
+    component: EditProfile,
+  },
   {
     path: 'register',
     component: Register,
   },
-  { path: 'highlight', component: Highlight },
-  { path: 'wishlist', component: WishlistComponent },
+  {
+    path: 'highlight',
+    component: Highlight,
+  },
+  {
+    path: 'wishlist',
+    component: WishlistComponent,
+  },
   {
     path: 'product/:id',
     component: ProductPage,
@@ -27,6 +48,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'admin',
+    component: Admin,
   },
   { path: '**', component: NotFound },
 ];

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 interface User {
   _id: string;
@@ -18,20 +18,16 @@ interface User {
 }
 
 @Component({
-  selector: 'app-profile',
+  selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './profile.html',
-  styleUrls: ['./profile.css'],
+  imports: [CommonModule, FormsModule],
+  templateUrl: './edit-profile.html',
+  styleUrls: ['./edit-profile.css'],
 })
-export class Profile implements OnInit {
+export class EditProfile implements OnInit {
   user: User | null = null;
 
-  constructor(
-    private http: HttpClient,
-    public authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private http: HttpClient, public authService: AuthService) {}
 
   ngOnInit(): void {
     const userData = JSON.parse(
@@ -69,7 +65,11 @@ export class Profile implements OnInit {
       });
   }
 
-  editProfile() {
-    this.router.navigate(['/edit-profile']);
+  changePassword() {
+    alert('Função "Alterar senha" ainda não implementada');
+  }
+
+  goBack() {
+    window.history.back();
   }
 }

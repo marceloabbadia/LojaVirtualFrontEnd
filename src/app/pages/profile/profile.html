@@ -1,1 +1,50 @@
-<p>profile works!</p>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <div class="mb-3">
+            <label class="form-label text-muted">Nome</label>
+            <p class="fw-bold mb-0">{{user?.name }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted">E-mail</label>
+            <p class="fw-bold mb-0">{{ user?.email }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted">Senha</label>
+            <p class="fw-bold mb-0">••••••••</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted">Morada</label>
+            <p class="fw-bold mb-0">{{ user?.address }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted">Código Postal</label>
+            <p class="fw-bold mb-0">{{ user?.cp4 }}-{{ user?.cp3 }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted">Localidade</label>
+            <p class="fw-bold mb-0">{{ user?.cplocal }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted">País</label>
+            <p class="fw-bold mb-0">{{user?.country }}</p>
+          </div>
+
+          <div class="mt-4 d-grid">
+            <button class="btn btn-primary" (click)="editProfile()">
+              Alterar informação
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

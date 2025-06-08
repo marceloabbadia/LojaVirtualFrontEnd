@@ -1,0 +1,67 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <h2 class="mb-4 text-center">Editar Perfil</h2>
+
+      <div *ngIf="user">
+        <div class="mb-3 d-flex align-items-center">
+          <label class="form-label me-3 label-fixed">Nome</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="user.name"
+            required
+          />
+        </div>
+
+        <div class="mb-3 d-flex align-items-center">
+          <label class="form-label me-3 label-fixed">E-mail</label>
+          <input type="email" class="form-control" [value]="user.email" />
+        </div>
+
+        <div class="mb-3 d-flex align-items-center">
+          <label class="form-label me-3 label-fixed">Morada</label>
+          <input type="text" class="form-control" [(ngModel)]="user.address" />
+        </div>
+
+        <div class="mb-3 d-flex align-items-center">
+          <label class="form-label me-1 label-fixed">Código Postal</label>
+          <div class="d-flex flex-grow-1 gap-3">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="user.cp4"
+              placeholder="CP4"
+            />
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="user.cp3"
+              placeholder="CP3"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3 d-flex align-items-center">
+          <label class="form-label me-3 label-fixed">Localidade</label>
+          <input type="text" class="form-control" [(ngModel)]="user.cplocal" />
+        </div>
+
+        <div class="mb-3 d-flex align-items-center">
+          <label class="form-label me-3 label-fixed">País</label>
+          <input type="text" class="form-control" [(ngModel)]="user.country" />
+        </div>
+      </div>
+
+      <div class="mt-4 d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="goBack()">Voltar</button>
+        <button class="btn btn-outline-primary" (click)="changePassword()">
+          Alterar Senha
+        </button>
+        <button class="btn btn-success" (click)="onSave()">
+          Salvar Alterações
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

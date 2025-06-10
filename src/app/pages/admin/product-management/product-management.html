@@ -1,1 +1,99 @@
-<p>product-management works!</p>
+<div class="container mt-4">
+  <h4>Adicionar Novo Produto</h4>
+
+  <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.name"
+        name="name"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Marca</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.brand"
+        name="brand"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Tipo</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.productType"
+        name="productType"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Cor</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.color"
+        name="color"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Preço (€)</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="product.price"
+        name="price"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Descrição</label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="product.description"
+        name="description"
+      ></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Foto Principal (URL)</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.mainPhoto"
+        name="mainPhoto"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Foto Secundária (URL)</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.secondaryPhoto"
+        name="secondaryPhoto"
+      />
+    </div>
+
+    <div class="form-check mb-3">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [(ngModel)]="product.highlight"
+        name="highlight"
+      />
+      <label class="form-check-label">Destaque</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar Produto</button>
+  </form>
+</div>

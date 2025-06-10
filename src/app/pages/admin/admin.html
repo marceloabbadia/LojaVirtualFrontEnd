@@ -1,1 +1,17 @@
 <p>admin works!</p>
+<div class="container mt-5">
+  <h2>Área de Administração</h2>
+
+  <div class="d-grid gap-3 mt-4">
+    <button class="btn btn-outline-primary" routerLink="user-management">
+      Gestão de Utilizadores
+    </button>
+
+    <button
+      class="btn btn-outline-success"
+      [routerLink]="'/product-management'"
+    >
+      Adicionar Produto
+    </button>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+form .form-control {
+  flex: 1;
+}
+label {
+  font-weight: 500;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.btn-sm {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}

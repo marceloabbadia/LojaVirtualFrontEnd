@@ -1,0 +1,13 @@
+.table thead th {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.form-select-sm {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+}

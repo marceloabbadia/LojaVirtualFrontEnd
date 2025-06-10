@@ -1,1 +1,185 @@
 <p>user-management works!</p>
+<div class="container mt-5">
+  <h4>Gerenciar Utilizadores</h4>
+
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Morada</th>
+        <th>Código Postal</th>
+        <th>País</th>
+        <th>Situação</th>
+        <th>Função</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of users" class="align-middle">
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.address || '-' }}</td>
+        <td>{{ u.cp4 }}-{{ u.cp3 }}</td>
+        <td>{{ u.country || '-' }}</td>
+
+        <td>
+          <select
+            class="form-select form-select-sm"
+            [(ngModel)]="u.situation"
+            (change)="onSituationChange(u)"
+          >
+            <option value="disabled">Disabled</option>
+            <option value="actived">Actived</option>
+          </select>
+        </td>
+
+        <td>
+          <select
+            class="form-select form-select-sm"
+            [(ngModel)]="u.function"
+            (change)="onFunctionChange(u)"
+          >
+            <option value="cliente">Cliente</option>
+            <option value="admin">Admin</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container mt-5">
+  <h4>Cadastrar Novo Utilizador</h4>
+
+  <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="newUser.name"
+        name="name"
+        required
+        ngModel
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">E-mail</label>
+      <input
+        type="email"
+        class="form-control"
+        [(ngModel)]="newUser.email"
+        name="email"
+        required
+        ngModel
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Senha</label>
+      <input
+        type="password"
+        class="form-control"
+        [(ngModel)]="newUser.password"
+        name="password"
+        required
+        ngModel
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Morada</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="newUser.address"
+        name="address"
+        required
+        ngModel
+      />
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">CP4</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.cp4"
+          name="cp4"
+          required
+          ngModel
+        />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">CP3</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.cp3"
+          name="cp3"
+          required
+          ngModel
+        />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Localidade</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="newUser.cplocal"
+        name="cplocal"
+        required
+        ngModel
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">País</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="newUser.country"
+        name="country"
+        required
+        ngModel
+      />
+    </div>
+
+    <div class="row mb-3" *ngIf="false">
+      <div class="col-md-6">
+        <label class="form-label">Situação</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.situation"
+          name="situation"
+          value="disabled"
+          readonly
+        />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Função</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.function"
+          name="function"
+          value="cliente"
+          readonly
+        />
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!registerForm.form.valid"
+    >
+      Cadastrar
+    </button>
+  </form>
+</div>

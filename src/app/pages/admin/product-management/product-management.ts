@@ -1,17 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+interface Product {
+  _id: string;
+  name: string;
+  brand: string;
+  productType: string;
+  color: string;
+  price: number;
+  description: string;
+  mainPhoto: string;
+  secondaryPhoto: string;
+  highlight: boolean;
+}
+
 @Component({
   selector: 'app-product-management',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './product-management.html',
-  styleUrl: './product-management.css',
+  styleUrls: ['./product-management.css'],
 })
-export class ProductManagement {
-  product = {
+export class ProductManagement implements OnInit {
+  products: Product[] = [];
+
+  newProduct: Partial<Product> = {
     name: '',
     brand: '',
     productType: '',
@@ -23,18 +38,53 @@ export class ProductManagement {
     highlight: false,
   };
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.http.get<Product[]>('http://localhost:3000/product').subscribe({
+      next: (data) => {
+        this.products = data.map(p => ({
+          ...p,
+          highlight: p.highlight || false
+        }));
+      },
+      error: (err) => console.error('Erro ao carregar produtos:', err),
+    });
+  }
 
   onSubmit() {
-    this.http.post('http://localhost:3000/product', this.product).subscribe({
-      next: () => {
-        alert('Produto cadastrado com sucesso!');
-        this.router.navigate(['/admin']);
-      },
-      error: (err) => {
-        console.error('Erro ao cadastrar produto:', err);
-        alert('Erro ao cadastrar produto.');
-      },
+    this.http.post('http://localhost:3000/product', this.newProduct).subscribe(() => {
+      this.loadProducts();
+      this.resetForm();
+    });
+  }
+
+  resetForm() {
+    this.newProduct = {
+      name: '',
+      brand: '',
+      productType: '',
+      color: '',
+      price: 0,
+      description: '',
+      mainPhoto: '',
+      secondaryPhoto: '',
+      highlight: false,
+    };
+  }
+
+  toggleHighlight(product: Product, event: Event): void {
+    event.stopPropagation();
+    const updatedHighlight = !product.highlight;
+
+    this.http.patch(`http://localhost:3000/product/${product._id}`, {
+      highlight: updatedHighlight,
+    }).subscribe(() => {
+      product.highlight = updatedHighlight;
     });
   }
 }

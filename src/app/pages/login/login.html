@@ -28,14 +28,16 @@
         />
       </div>
 
-      <button
-        type="submit"
-        class="modal-submit"
-        [disabled]="!loginForm.form.valid"
-      >
-        Validar
-      </button>
+      <div class="modal-actions">
+        <button
+          type="submit"
+          class="modal-submit"
+          [disabled]="!loginForm.form.valid"
+        >
+          Validar
+        </button>
+        <button class="btModalClose" (click)="closeModal()">Fechar</button>
+      </div>
     </form>
-    <button class="btModalClose" (click)="closeModal()">Fechar</button>
   </div>
 </div>

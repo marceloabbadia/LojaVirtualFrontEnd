@@ -5,6 +5,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  display: flex; /* Use flex to center the modal body */
   justify-content: center;
   align-items: center;
   z-index: 9999;
@@ -18,24 +19,36 @@
   max-width: 400px;
   width: 100%;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added for better visual */
 }
 
 .modal-form-group {
-  text-align: left;
+  display: flex; /* Make label and input side-by-side */
+  align-items: center; /* Vertically align them */
   margin-bottom: 1rem;
+  gap: 10px; /* Space between label and input */
 }
 
 .modal-form-group label {
-  display: block;
+  flex-shrink: 0; /* Prevent label from shrinking */
+  width: 80px; /* Give the label a fixed width */
   font-weight: bold;
-  margin-bottom: 0.5rem;
+  text-align: right; /* Align label text to the right */
+  margin-bottom: 0; /* Remove default margin */
 }
 
 .modal-input {
-  width: 100%;
+  flex-grow: 1; /* Allow input to take remaining space */
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex; /* Use flex to put buttons side-by-side */
+  justify-content: center; /* Center the buttons */
+  gap: 1rem; /* Space between buttons */
+  margin-top: 1.5rem; /* Add some space above buttons */
 }
 
 .modal-submit {
@@ -46,24 +59,28 @@
   font-size: 1rem;
   border-radius: 4px;
   cursor: pointer;
+  flex: 1; /* Allow button to grow and shrink */
+  max-width: 150px; /* Limit button width */
 }
 
 .modal-submit:disabled {
-  background-color: #fcd34d;
+  background-color: #4d67fc;
   cursor: not-allowed;
 }
 
 .btModalClose {
-  margin-top: 1rem;
   background: transparent;
-  color: #f97316;
+  color: #f91616;
   border: 1px solid #f97316;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
+  flex: 1; /* Allow button to grow and shrink */
+  max-width: 150px; /* Limit button width */
 }
 
 .errorMessage {
   color: red;
   margin-bottom: 1rem;
+  text-align: center;
 }

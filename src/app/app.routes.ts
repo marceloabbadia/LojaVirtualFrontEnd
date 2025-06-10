@@ -11,6 +11,7 @@ import { Profile } from './pages/profile/profile';
 import { EditProfile } from './pages/edit-profile/edit-profile';
 import { ProductManagement } from './pages/admin/product-management/product-management';
 import { AdminGuard } from './guards/auth-guard';
+import { UserManagement } from './pages/admin/user-management/user-management';
 
 export const routes: Routes = [
   {
@@ -59,6 +60,11 @@ export const routes: Routes = [
   {
     path: 'product-management',
     component: ProductManagement,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'user-management',
+    component: UserManagement,
     canActivate: [AdminGuard],
   },
   { path: '**', component: NotFound },
